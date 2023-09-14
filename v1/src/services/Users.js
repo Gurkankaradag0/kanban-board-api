@@ -1,5 +1,9 @@
 const User = require('../models/Users')
 
+const findOne = (id) => {
+    return User.findById(id)
+}
+
 const insert = (data) => {
     const instance = new User(data)
     return instance.save()
@@ -14,6 +18,7 @@ const del = (id) => {
 }
 
 module.exports = {
+    findOne,
     insert,
     loginUser,
     del
