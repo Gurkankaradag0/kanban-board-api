@@ -12,7 +12,7 @@ router.route('/:id').delete(authenticate, paramValidate('id'), remove)
 
 router.route('/:id/add-task').post(authenticate, paramValidate('id'), validate(schemas.createTaskValidation), addTask)
 router.route('/:id/:taskId/move-task').post(authenticate, paramValidate('id'), validate(schemas.moveTaskValidation), moveTask)
-router.route('/:id/:taskId').patch(authenticate, paramValidate('id'), paramValidate('taskId'), updateTask)
+router.route('/:id/:taskId').patch(authenticate, paramValidate('id'), paramValidate('taskId'), validate(schemas.updateTaskValidation), updateTask)
 router.route('/:id/:taskId').delete(authenticate, paramValidate('id'), paramValidate('taskId'), delTask)
 
 module.exports = router
