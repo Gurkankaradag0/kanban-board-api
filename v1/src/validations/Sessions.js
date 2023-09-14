@@ -11,18 +11,16 @@ const updateValidation = Joi.object({
 })
 
 const createTaskValidation = Joi.object({
-    task: Joi.string().required().min(3),
-    order: Joi.number().required()
+    task: Joi.string().required().min(3)
 })
 
 const moveTaskValidation = Joi.object({
-    session_id: Joi.string().required().min(8),
-    order: Joi.number().required()
+    session_id: Joi.string().min(8),
+    index: Joi.number().required()
 })
 
 const updateTaskValidation = Joi.object({
-    task: Joi.string().min(3),
-    order: Joi.number()
+    task: Joi.string().min(3)
 })
 
 module.exports = {

@@ -10,8 +10,7 @@ const SessionSchema = new Mongoose.Schema(
         },
         tasks: [
             {
-                task: String,
-                order: Number
+                task: String
             }
         ]
     },

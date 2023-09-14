@@ -42,18 +42,23 @@ const moveTask = (req, res) => {
     findOne(req.params.id)
         .then((session) => {
             if (!session) return res.status(httpStatus.BAD_REQUEST).send({ message: 'There is no such record.' })
+
             const task = session.tasks.find((task) => task._id.toString() === req.params.taskId)
             session.tasks = session.tasks.filter((task) => task._id.toString() !== req.params.taskId)
+
+            if (!req.body?.session_id) {
+                session.tasks.splice(req.body.index, 0, task)
+            }
+
             session
                 .save()
-                .then(() => {
+                .then((updatedSession) => {
+                    if (!req.body?.session_id) return res.status(httpStatus.OK).send({ message: 'The operation was successful.' })
+
                     findOne(req.body.session_id)
                         .then((newSession) => {
                             if (!newSession) return res.status(httpStatus.BAD_REQUEST).send({ message: 'There is no such record.' })
-                            newSession.tasks.push({
-                                task: task.task,
-                                order: req.body.order
-                            })
+                            newSession.tasks.splice(req.body.index, 0, task)
                             newSession
                                 .save()
                                 .then(() => res.status(httpStatus.OK).send({ message: 'The operation was successful.' }))
